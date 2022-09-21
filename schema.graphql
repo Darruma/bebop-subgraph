@@ -1,0 +1,6 @@
+type ExampleEntity @entity {
+  id: ID!
+  count: BigInt!
+  maker_address: Bytes! # address
+  taker_address: Bytes! # address
+}

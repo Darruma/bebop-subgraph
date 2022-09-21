@@ -1,0 +1,29 @@
+specVersion: 0.0.1
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Bebop
+    network: mainnet
+    source:
+      address: "0x29fbd00940df70cfc5dad3f2370686991e2bbf5c"
+      abi: Bebop
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - OrderExecuted
+        - OrderExecuted2
+        - OrderExecuted3
+      abis:
+        - name: Bebop
+          file: ./abis/Bebop.json
+      eventHandlers:
+        - event: OrderExecuted(address,address,address,address,uint256,uint256,address)
+          handler: handleOrderExecuted
+        - event: OrderExecuted2(address,address,address[],address,uint256[],uint256,address)
+          handler: handleOrderExecuted2
+        - event: OrderExecuted3(address,address,address,address[],uint256,uint256[],address)
+          handler: handleOrderExecuted3
+      file: ./src/mapping.ts
