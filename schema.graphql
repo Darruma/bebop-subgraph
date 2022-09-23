@@ -1,6 +1,45 @@
-type ExampleEntity @entity {
+
+type User @entity {
   id: ID!
-  count: BigInt!
-  maker_address: Bytes! # address
-  taker_address: Bytes! # address
+  makerOrders: [Order!] @derivedFrom(field: "maker")
+  takerOrders: [Order!] @derivedFrom(field: "taker")
+  receivedOrders: [Order!] @derivedFrom(field: "receiver")
+  makerTokenVolumes: [MakerTokenVolume!] @derivedFrom(field: "maker")
+  takerTokenVolumes: [TakerTokenVolume!] @derivedFrom(field: "taker")
+}
+
+type MakerTokenVolume @entity {
+  id: ID!
+  amount: BigInt!
+  token: Token!
+  maker: User!
+}
+
+type TakerTokenVolume @entity {
+  id: ID!
+  amount: BigInt!
+  token: Token!
+  taker: User!
+}
+
+
+type Order @entity {
+ id: ID! 
+ timestamp: BigInt!
+ blockNumber: BigInt!
+ maker: User!
+ taker: User!
+ receiver: User!
+ baseTokens: [Token!]
+ quoteTokens: [Token!]
+ baseAmounts: [BigInt!]
+ quoteAmounts: [BigInt!]
+}
+
+type Token @entity {
+  id: ID!
+  name: String!
+  symbol: String!
+  decimals: BigInt!
+  totalSupply: BigInt!
 }
